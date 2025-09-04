@@ -1,22 +1,17 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include <omp.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-
-
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
 
 #pragma omp parallel
-{
-  int my_id = omp_get_thread_num();
-  int threads = omp_get_num_threads();
+  {
+    int my_id = omp_get_thread_num();
+    int threads = omp_get_num_threads();
 
-  fprintf(stdout, "Hello from thread %d (total of %d threads)\n", my_id, threads);
-}
- 
+    fprintf(stdout, "Hello from thread %d (total of %d threads)\n", my_id,
+            threads);
+  }
+
   return 0;
 }
-
-
-
