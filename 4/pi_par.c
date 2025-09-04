@@ -5,8 +5,7 @@
  *
  * Compile:  gcc -g -Wall -o pi.x pi.c -lm
  * Run:      pi.x <thread_count> <n>
- *           thread_count is the number of threads (this sequential
- *              version only uses 1 thread)
+ *           thread_count is the number of threads
  *           n is the number of terms of the series to use
  *
  * Output:   The estimate of pi and the value of pi computed by the
@@ -15,6 +14,7 @@
  */
 
 #include <math.h>
+#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
@@ -24,7 +24,7 @@ void Usage(char *prog_name);
 int main(int argc, char *argv[]) {
   long long n, i;
   struct timeval start, stop;
-  double factor = 1.0;
+  double factor;
   double sum = 0.0;
   int thread_count = 1;
 
@@ -37,7 +37,9 @@ int main(int argc, char *argv[]) {
 
   gettimeofday(&start, NULL);
 
-  for (i = 0; i < n; i++, factor = -factor) {
+#pragma omp parallel for reduction(+ : sum) private(factor)
+  for (i = 0; i < n; i++) {
+    factor = (i % 2 == 0) ? 1.0 : -1.0;
     sum += factor / (2 * i + 1);
   }
 
