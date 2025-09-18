@@ -10,7 +10,7 @@
 // ./ndamas.x 14
 // t | ms   | speedup
 // 1 | 3500
-// 8 | 640  | 5.47x
+// 8 | 635  | 5.5x
 
 // variáveis globais
 static int nSolutions = 0; // total de soluções (saída)
